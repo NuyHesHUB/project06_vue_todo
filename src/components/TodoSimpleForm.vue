@@ -16,6 +16,7 @@
 <script>
     import {ref} from 'vue';
     export default {
+        emits:['add-todo'],
         setup(props, context){
             const todo=ref('');/* 값을 반환해야해서 return에 작성 */
             const hasError=ref(false);
@@ -30,8 +31,6 @@
                         completed:false
                         }
                     )
-                    
-                
                 hasError.value=false;
                 todo.value=''
                 }
