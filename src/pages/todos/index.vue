@@ -111,16 +111,16 @@
             }
            
         }
-        const toggleTodo= async (index) =>{
+        const toggleTodo= async (index, checked) =>{
            // console.log(index)
            error.value="";
            const id= todos.value[index].id;
   
            try{
                 await axios.patch('http://localhost:3000/todos/'+ id, {
-                    completed: !todos.value[index].completed
+                    completed: checked/*  !todos.value[index].completed */
                 });
-                todos.value[index].completed= !todos.value[index].completed;
+                todos.value[index].completed= checked/* !todos.value[index].completed; */
            }catch(err){
                 console.log(err);
                 error.value="찾는 문장이 없습니다"
@@ -158,7 +158,7 @@
     .d-flex{display: flex;}
     .flex-grow-1{flex-grow: 1;}
     .flex-grow-1 input{width: 98%; padding: 10px 20px;}
-    .btn{padding: 12px 30px; border: none; background: #147f8d; color: #fff}
+    .btn{padding: 10px 20px; border: none; background: #147f8d; color: #fff}
     form{margin-bottom: 50px;}
     .card{margin: 10px 0;}
     .card-body{border: 1px solid #ccc; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;}

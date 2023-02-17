@@ -57,38 +57,13 @@
     },
     {
       "subject": "바",
-      "completed": false,
+      "completed": true,
       "id": 12
     },
     {
-      "subject": "6",
+      "subject": "테스트12443",
       "completed": false,
       "id": 13
-    },
-    {
-      "subject": "7",
-      "completed": false,
-      "id": 14
-    },
-    {
-      "subject": "8",
-      "completed": false,
-      "id": 15
-    },
-    {
-      "subject": "9",
-      "completed": false,
-      "id": 16
-    },
-    {
-      "subject": "0",
-      "completed": false,
-      "id": 17
-    },
-    {
-      "subject": "1",
-      "completed": false,
-      "id": 18
     }
   ]
 }
