@@ -44,26 +44,6 @@
       "subject": "다",
       "completed": false,
       "id": 9
-    },
-    {
-      "subject": "라",
-      "completed": false,
-      "id": 10
-    },
-    {
-      "subject": "마",
-      "completed": false,
-      "id": 11
-    },
-    {
-      "subject": "바",
-      "completed": true,
-      "id": 12
-    },
-    {
-      "subject": "테스트12443",
-      "completed": false,
-      "id": 13
     }
   ]
 }

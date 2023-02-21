@@ -2,8 +2,9 @@ import { createRouter, createWebHistory} from 'vue-router';
 import Home from '../pages/index.vue';
 import Todos from '../pages/todos/index.vue';
 import Todo from '../pages/todos/_id.vue';
+import TodoCreate from '../pages/todos/create/index.vue'
 
-const rouster = createRouter({
+const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
@@ -12,9 +13,14 @@ const rouster = createRouter({
             component: Home,
         },
         {
-            path: '/Todos',
+            path: '/todos',
             name: 'Todos',
             component: Todos
+        },
+        {
+            path: '/todos/create',
+            name: 'TodoCreate',
+            component: TodoCreate
         },
         {
             path: '/todos/:id',
@@ -24,4 +30,4 @@ const rouster = createRouter({
     ]
 })
 // 1. /home 2. todos 3. todos/:id
-export default rouster
+export default router

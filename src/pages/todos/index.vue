@@ -1,8 +1,9 @@
 <template>
     <div class="container">
         <h2>TODO-List</h2>
+        <button class="btn btnmb" @click="moveToCreatePage">CREATE TODO</button>
         <input type="text" placeholder="검색" class="form-control" v-model="serchText">
-        <TodoSimpleForm  @add-todo="addTodo"/>
+        <!-- <TodoSimpleForm  @add-todo="addTodo"/> -->
         <div v-if="!todos.length">
             찾는 문장이 없습니다..
         </div>
@@ -11,14 +12,14 @@
         <nav class="nav">
             <ul class="pagination">
                 <li v-if="currentPage !==1" class="page-item">
-                  <a href="#" class="page-link"  @click="getTodos(currentPage-1)"><i class="fa-solid fa-chevron-left"></i></a>
+                  <a href="#!" class="page-link"  @click="getTodos(currentPage-1)"><i class="fa-solid fa-chevron-left"></i></a>
                 </li>
                
                 <li v-for="page in numberofPages" :key="page" class="page-item" :class="currentPage===page ? 'active' : ''">
-                  <a href="#" @click="getTodos(page)" class="page-link" :class="currentPage===page ? 'active' : ''">{{ page }}</a>
+                  <a href="#!" @click="getTodos(page)" class="page-link" :class="currentPage===page ? 'active' : ''">{{ page }}</a>
                 </li>
   
-                <li v-if="numberofPages !==currentPage" class="page-item" ><a href="#" @click="getTodos(currentPage+1)" class="page-link"><i class="fa-solid fa-chevron-right"></i></a>
+                <li v-if="numberofPages !==currentPage" class="page-item" ><a href="#!" @click="getTodos(currentPage+1)" class="page-link"><i class="fa-solid fa-chevron-right"></i></a>
                 </li>
             </ul>
         </nav>
@@ -27,17 +28,19 @@
   
   <script>
   import { watch, computed, ref } from 'vue';
-  import TodoSimpleForm from '@/components/TodoSimpleForm.vue';
+  /* import TodoSimpleForm from '@/components/TodoSimpleForm.vue'; */
   import TodoList from '@/components/TodoList.vue';
   import axios from 'axios';
+  import { useRouter } from 'vue-router'
   
   export default {
     components: {
-        TodoSimpleForm,
+        /* TodoSimpleForm, */
         TodoList,
     },
     setup(){
-        
+        /* 버튼 라우터 */
+        const router=useRouter();
         const todos = ref([ ]);
         const serchText= ref('');
         const error=ref('');
@@ -62,6 +65,12 @@
             }
         };
         getTodos();
+
+        const moveToCreatePage = ()=>{
+            router.push({
+                name:'TodoCreate',
+            })
+        }
         const addTodo = async (todo) => {
             error.value='';
             try{
@@ -146,12 +155,13 @@
            getTodos,
            numberofPages,
            currentPage,
+           moveToCreatePage,
         }
     }
   }
   </script>
   
-  <style>
+  <style scoped> 
     *{margin: 0; padding: 0; box-sizing: border-box;}
     .container{width: 100%; max-width: 1024px; margin: 0 auto; padding: 0 20px;}
     h2{text-align: center; color: #147f8d; margin-bottom: 50px; margin-top: 50px;}
@@ -170,4 +180,5 @@
     .page-item{ padding: 10px; margin: 0 3px; border: 1px solid #ddd}
     .page-link{color: #666; text-decoration: none;}
     .active{background: #666; color: #fff}
+    .btnmb{margin-bottom: 10px;}
   </style>
