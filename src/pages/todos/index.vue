@@ -1,25 +1,33 @@
 <template>
-    <div class="container">
-        <h2>TODO-List</h2>
-        <button class="btn btnmb" @click="moveToCreatePage">CREATE TODO</button>
-        <input type="text" placeholder="검색" class="form-control" v-model="serchText">
-        <!-- <TodoSimpleForm  @add-todo="addTodo"/> -->
-        <div v-if="!todos.length">
-            찾는 문장이 없습니다..
+    <div class="todo-container">
+        <h2>TO-DO</h2>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="margin-right: 0.5rem; width: 80%;">
+                <input type="text" placeholder="TO-DO 검색" class="form-control" v-model="serchText" style="margin: 1rem 0; width: 300px; padding: 5px 20px;">
+            </div>
+            <div>
+                <button class="btn create-btn" @click="moveToCreatePage">CREATE TODO</button>
+            </div>
+        </div>
+        <div v-if="!todos.length" style="font-size: 14px; text-align: center; color: #888; padding: 5rem 0;">
+            찾는 문장이 없습니다
         </div>
         <TodoList :todos="todos" @delete-todo="deleteTodo" @toggle-todo="toggleTodo" />
         <br>
-        <nav class="nav">
+        <nav>
             <ul class="pagination">
-                <li v-if="currentPage !==1" class="page-item">
-                  <a href="#!" class="page-link"  @click="getTodos(currentPage-1)"><i class="fa-solid fa-chevron-left"></i></a>
+                <li  class="page-item">
+                    <a href="#!" class="page-link"  @click="getTodos(currentPage-1)">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
                 </li>
-               
                 <li v-for="page in numberofPages" :key="page" class="page-item" :class="currentPage===page ? 'active' : ''">
-                  <a href="#!" @click="getTodos(page)" class="page-link" :class="currentPage===page ? 'active' : ''">{{ page }}</a>
+                    <a href="#!" @click="getTodos(page)" class="page-link" :class="currentPage===page ? 'active' : ''">{{ page }}</a>
                 </li>
-  
-                <li v-if="numberofPages !==currentPage" class="page-item" ><a href="#!" @click="getTodos(currentPage+1)" class="page-link"><i class="fa-solid fa-chevron-right"></i></a>
+                <li  class="page-item" >
+                    <a href="#!" @click="getTodos(currentPage+1)" class="page-link">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -28,14 +36,12 @@
   
   <script>
   import { watch, computed, ref } from 'vue';
-  /* import TodoSimpleForm from '@/components/TodoSimpleForm.vue'; */
   import TodoList from '@/components/TodoList.vue';
   import axios from 'axios';
   import { useRouter } from 'vue-router'
   
   export default {
     components: {
-        /* TodoSimpleForm, */
         TodoList,
     },
     setup(){
@@ -50,9 +56,12 @@
         const numberofPages=computed(() =>{
             return Math.ceil(numberOfTodos.value/limit)
         });
-  
+        
+
         const getTodos = async (page = currentPage.value) =>{
             currentPage.value=page;
+
+            /* const number = numberofPages.value */
             try{
                 const res=await axios.get(`http://localhost:3000/todos?_sort=id&_order=desc&subject_like=${serchText.value}&_page=${page}&_limit=${limit}`);
                 //console.log(res.headers)
@@ -63,9 +72,21 @@
                 console.log(err);
                 error.value="찾는 문장이 없습니다"
             }
+
+            /* console.log('numberofPages.value',numberofPages.value); */
+            /* console.log('currentPage.value',currentPage.value); */
+
+            if (currentPage.value < 1) {
+                currentPage.value = 1
+            }
+            if (currentPage.value > numberofPages.value ) {
+                currentPage.value = numberofPages.value;
+            }
+            
+
         };
         getTodos();
-
+        
         const moveToCreatePage = ()=>{
             router.push({
                 name:'TodoCreate',
@@ -90,21 +111,6 @@
           // console.log(current, prev)
           getTodos(1);
         })
-  
-        /* const addTodo = (todo) => {
-           // todos.value.push(todo);
-            error.value='';
-           axios.post('http://localhost:3000/todos',{
-                subject:todo.subject,
-                completed:todo.completed,
-           }).then((res) =>{
-                console.log(res);
-                todos.value.push(res.data)
-           }).catch((err) =>{
-                console.log(err);
-                error.value="잘못된 입력입니다."
-           });
-        } */
        
         const deleteTodo = async (index) => {
             error.value="";
@@ -135,6 +141,7 @@
                 error.value="찾는 문장이 없습니다"
            }
         }
+
         // const filteredTodos = computed(() =>{
         //     if(serchText.value){
         //         return todos.value.filter(todo =>{
@@ -145,13 +152,11 @@
         // })
   
         return {
-            todos,
-           /*  todoStyle, */
+           todos,
            deleteTodo,
            addTodo,
            toggleTodo,
            serchText,
-           /* filteredTodos */
            getTodos,
            numberofPages,
            currentPage,
@@ -160,25 +165,19 @@
     }
   }
   </script>
+
+  <style>
+      .todo-container{width: 100%; padding: 0 80px;}
+      h1{text-align: center; color: blue; text-transform: uppercase;}
+      h2{text-align: center; color: blue; text-transform: uppercase;}
+      .btn{ border: none; background: #000000; color: #fff}
+      .default-btn{padding: 12px 30px; border: none; color: #242424; font-weight: bold;}
+  </style>
   
-  <style scoped> 
-    *{margin: 0; padding: 0; box-sizing: border-box;}
-    .container{width: 100%; max-width: 1024px; margin: 0 auto; padding: 0 20px;}
-    h2{text-align: center; color: #147f8d; margin-bottom: 50px; margin-top: 50px;}
-    .d-flex{display: flex;}
-    .flex-grow-1{flex-grow: 1;}
-    .flex-grow-1 input{width: 98%; padding: 10px 20px;}
-    .btn{padding: 10px 20px; border: none; background: #147f8d; color: #fff}
-    form{margin-bottom: 50px;}
-    .card{margin: 10px 0;}
-    .card-body{border: 1px solid #ccc; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;}
-    .form-check-input{margin-right: 10px;}
-    .todoStyle{text-decoration: line-through;color: gray}
-    .btnR{padding: 5px 20px; background: #e93838; color: #fff; border: none}
-    .form-control{width: 100%; border: 1px solid #ddd; margin-bottom: 10px; padding: 10px 20px;}
-    .pagination{list-style-type: none; display: flex; justify-content: center;}
-    .page-item{ padding: 10px; margin: 0 3px; border: 1px solid #ddd}
+  <style scoped>
+    .create-btn{padding: 10px 30px; background: rgb(19, 19, 100);}
+    .pagination{padding: 0; list-style: none; display: flex; justify-content: center;}
+    .page-item{ padding: 5px 15px; margin: 0 3px; border: 1px solid #ddd}
     .page-link{color: #666; text-decoration: none;}
-    .active{background: #666; color: #fff}
-    .btnmb{margin-bottom: 10px;}
+    .active{ background: #555; color: #fff}
   </style>

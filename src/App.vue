@@ -1,26 +1,36 @@
 <template>
-    <nav class="navbar">
-        <ul>
-            <!-- <li><router-link to="/">Home</router-link></li> -->
-            <!-- <li><router-link to="/Todos">TODOS</router-link></li> -->
-            <li><router-link :to="{name:'Home'}">HOME</router-link></li>
-            <li><router-link :to="{name:'Todos'}">TODOS</router-link></li>
-            <!-- to="/" 이렇게 쓰다가 name을 쓰려면 이렇게 써야함 -->
-        </ul>
-    </nav>
-    <router-view/>
+    <div class="app-container">
+        <nav class="app-navigation">
+            <h1>Vue</h1>
+            <div class="divide"></div>
+            <ul>
+                <li><router-link :to="{name:'Todos'}">TO-DO</router-link></li>
+            </ul>
+        </nav>
+        <router-view/>
+    </div>
 </template>
 
 <script>
     export default{
-
     }
-
 </script>
 
 <style scoped>
-   .navbar{border: 1px solid #ddd; width: 100%; padding: 20px;}
-   .navbar ul{max-width: 1024px; width: 100%; list-style: none; display: flex; margin: 0 auto; width: 100%;}
-   .navbar li{}
-   .navbar li a{text-decoration: none; padding: 10px 20px; font-weight: bold; color: #242424;}
+    *{margin: 0; padding: 0; box-sizing: border-box;}
+    ul{list-style: none;}
+    a{text-decoration: none; color: #222;}
+    .app-container{width: 100%; /* max-width: 1200px; */ margin: 0 auto; }
+    .app-navigation{width: 100%; height: 60px; margin: 0 auto; padding: 0 80px; background: rgb(255, 255, 255); display: flex; align-items: center; border-bottom: 2px solid #000000;}
+    .app-navigation .divide{margin-left: 80px; margin-right: 50px; width: 2px; height: 100%; background: #000;}
+    .app-navigation > h1{
+        font-weight: bold; 
+        font-size: 40px; 
+        color: #000; 
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none
+    }
+    .app-navigation > ul > li > a {color: #222;}
 </style>

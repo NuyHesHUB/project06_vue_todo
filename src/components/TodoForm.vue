@@ -1,35 +1,32 @@
 <template>
-    <div class="container">
-        <div v-if="loading">
-            Loading...
-        </div>
-        <form v-else @submit.prevent="onSave">
-            <div class="row1">
+    <div class="page-container">
+        <form  @submit.prevent="onSave">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                 <div>
-                    <div class="form-group">
-                        <label>Todo Subject</label>
+                    <div style="display: flex; align-items: center;">
+                        <label style="text-align: center; margin-right: 10px;">To-Do</label>
                         <input type="text" class="from-control" v-model="todo.subject">
                         <div v-if="subjectError">{{ subjectError }}</div>
                     </div>
                 </div>
                 <div v-if="editing">
-                    <div class="form-group">
-                        <label>Status</label>
-                        
+                    <div>
                         <div>
                             <button @click="toggleTodoStatus" type="button" class="btn" :class="todo.completed ? 'btnGG':'btnRR'">{{todo.completed ? '완료':'미완료'}}</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="bodyWrap">
-                <div class="form-group">
-                    <label>Body</label>
+            <div>
+                <div style="display: flex; flex-direction:column; margin-bottom: 1rem;">
+                    <label style="margin-bottom: 5px;">MEMO</label>
                     <textarea v-model="todo.body" cols="30" rows="10"></textarea>
                 </div>
             </div>
-            <button class="btnD btnmt" type="submit"  :disabled="!todoUpdated">{{ editing ? '저장' : '만들기' }}</button>
-            <button class="btn btnW btnl" @click="moveToTodoListPage">취소</button>
+            <div style="text-align: center;">
+                <button class="default-btn" type="submit"  :disabled="!todoUpdated">{{ editing ? '저장' : '만들기' }}</button>
+                <button class="default-btn" @click="moveToTodoListPage">취소</button>
+            </div>
         </form>
     </div>
 </template>
@@ -55,7 +52,7 @@
                 completed:false,
                 body:''
             });
-            const loading= ref(true);
+            /* const loading= ref(true); */
             const originalTodo=ref(null);
             const todoId=route.params.id
 
@@ -63,10 +60,9 @@
             const getTodo = async () =>{
                 const res = await axios.get(`http://localhost:3000/todos/${todoId} ` );
                 todo.value=res.data;
-                loading.value=false;
+                /* loading.value=false; */
                 originalTodo.value = {...res.data} 
             }
-           
 
             const toggleTodoStatus = () =>{
                 todo.value.completed = !todo.value.completed;
@@ -101,7 +97,7 @@
                          todo.value.subject = "";
                          todo.value.body ="";
                    
-                };
+                }
                     originalTodo.value = {...res.data}    
                 }catch(error){
                     console.log(error);
@@ -117,29 +113,13 @@
                 moveToTodoListPage,
                 onSave,
                 todoUpdated,
-                /* loading, */
                 subjectError,
             }
         }
     }
 </script>
-<style>
-    h1{margin-top: 30px; margin-bottom: 20px;}
-    .form-group{
-        display: flex;
-        flex-direction: column;
-    }
-    .form-group label{ font-weight: bold; margin-bottom: 5px;}
-    .form-group .from-control{padding: 10px 20px;}
-    .btnmt{margin-top: 10px;}
-    .row1{display: flex; justify-content: space-between;}
-    .row1>div{flex-basis: 49%; }
-    .btnRR{padding: 10px 20px; background: red;}
-    .btnGG{padding: 10px 20px; background: rgb(7, 104, 112);}
-    .btnW{background: rgb(211, 129, 129); color: #fcfcfc}
-    .btnl{margin-left: 10px;}
-</style>
 <style scoped>
-    .row1{margin-bottom: 20px;}
-    .btnD{padding: 12px 30px; border: none}
+    .page-container{width: 100%; max-width: 400px; margin: 0 auto;}
+    .btnRR{width:80px; padding: 10px 20px; background: red;}
+    .btnGG{width:80px; padding: 10px 20px; background: blue;}
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-      <h1>Create Todo</h1>
+    <div class="todo-container">
+      <h2>Create To-do</h2>
       <TodoForm />
     </div>
 </template>
@@ -9,10 +9,8 @@
     import TodoForm from '@/components/TodoForm.vue';
     export default {
         components: {
-            TodoForm
+            TodoForm 
         }
     }
-</script>
 
-<style>
-</style>
+</script>
