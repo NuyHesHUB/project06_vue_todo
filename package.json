@@ -2,9 +2,7 @@
   "name": "todolist",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "20.x"
-  },
+  
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -23,7 +21,7 @@
     "vue": "^3.2.47",
     "vue-moment": "^4.1.0",
     "vue-router": "^4.1.6",
-    "json-server": "^0.17.3"
+    "json-server": "0.17.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
