@@ -63,7 +63,7 @@
 
             /* const number = numberofPages.value */
             try{
-                const res=await axios.get(`http://localhost:3000/todos?_sort=id&_order=desc&subject_like=${serchText.value}&_page=${page}&_limit=${limit}`);
+                const res=await axios.get(`https://vue-todolist.herokuapp.com/todos?_sort=id&_order=desc&subject_like=${serchText.value}&_page=${page}&_limit=${limit}`);
                 //console.log(res.headers)
                 numberOfTodos.value=res.headers['x-total-count'];
                 todos.value=res.data;
@@ -95,7 +95,7 @@
         const addTodo = async (todo) => {
             error.value='';
             try{
-                await axios.post('http://localhost:3000/todos', {
+                await axios.post('https://vue-todolist.herokuapp.com/todos', {
                     subject:todo.subject,
                     completed:todo.completed, 
                 });
@@ -116,7 +116,7 @@
             error.value="";
             const id= todos.value[index].id;
             try{
-                await axios.delete('http://localhost:3000/todos/'+ id);
+                await axios.delete('https://vue-todolist.herokuapp.com/todos/'+ id);
                 // todos.value.splice(index, 1);
                 getTodos(1);
   
@@ -132,7 +132,7 @@
            const id= todos.value[index].id;
   
            try{
-                await axios.patch('http://localhost:3000/todos/'+ id, {
+                await axios.patch('https://vue-todolist.herokuapp.com/todos/'+ id, {
                     completed: checked/*  !todos.value[index].completed */
                 });
                 todos.value[index].completed= checked/* !todos.value[index].completed; */

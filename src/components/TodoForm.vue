@@ -58,7 +58,7 @@
 
             //console.log(route.params.id)
             const getTodo = async () =>{
-                const res = await axios.get(`http://localhost:3000/${todoId} ` );
+                const res = await axios.get(`https://vue-todolist.herokuapp.com/${todoId} ` );
                 todo.value=res.data;
                 /* loading.value=false; */
                 originalTodo.value = {...res.data} 
@@ -91,9 +91,9 @@
                         body:todo.value.body,
                     }
                     if(props.editing){
-                        res = await axios.put(`http://localhost:3000/${todoId}`,data );
+                        res = await axios.put(`https://vue-todolist.herokuapp.com/${todoId}`,data );
                     } else {
-                         res = await axios.post(`http://localhost:3000/`, data); 
+                         res = await axios.post(`https://vue-todolist.herokuapp.com/`, data); 
                          todo.value.subject = "";
                          todo.value.body ="";
                    
